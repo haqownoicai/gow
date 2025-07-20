@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <title>สารภาพความในใจ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kodchasan:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: black;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Kodchasan', sans-serif;
+    }
+
+    #text {
+      color: white;
+      font-size: 64px;
+      text-align: center;
+      white-space: pre-wrap;
+      line-height: 1.6;
+      opacity: 0;
+    }
+
+    .fade-in {
+      animation: fadeIn 2s forwards;
+    }
+
+    .fade-out {
+      animation: fadeOut 2s forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeOut {
+      to { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div id="text"></div>
+
+  <!-- ฝังเพลง YouTube แบบซ่อน iframe -->
+  <iframe width="0" height="0" 
+          src="https://www.youtube.com/embed/6w7bR2ipF6A?autoplay=1&loop=1&playlist=6w7bR2ipF6A" 
+          frameborder="0" 
+          allow="autoplay; encrypted-media" 
+          allowfullscreen>
+  </iframe>
+
+  <script>
+   const lines = [
+  "หนูเหงาไหม พี่เหงามากเลยนะ",
+  "พี่เห็นหนูไม่ค่อยตอบ ก็เลยไม่กล้าทักไปบ่อยเหมือนเมื่อก่อน",
+  "อาจจะเพราะพี่มันไม่ดีพอ พี่คิดช้าเกินไปจริง ๆ",
+  "ทุกครั้งที่ย้อนกลับไปคิด พี่ก็รู้สึกแย่กับตัวเองมาก",
+  "พี่อยากบอกหนูว่า พี่คิดถึงหนูจริง ๆ",
+  "ไม่รู้ว่าหนูจะเชื่อไหม แต่พี่ไม่ได้ลืมช่วงเวลาดี ๆ ที่เรามีให้กันเลย",
+  "พี่รู้ว่าคงยากที่จะกลับไปเป็นเหมือนเดิม",
+  "แต่พี่ขอโอกาสได้ไหม?",
+  "โอกาสที่พี่จะได้กลับไปอยู่ข้าง ๆ หนูในฐานะ พี่กร ที่ดีกว่าเดิม",
+  "แค่เป็นคนที่หนูสามารถระบายได้เสมอ พี่ก็ยินดีแล้ว",
+  "พี่รู้ว่ามันอาจจะสายไปแต่พี่อยากแก้ตัวอีกครั้ง ได้ไหม?",
+  "พี่สัญญาว่าจะไม่ทำให้หนูต้องเสียใจอีก",
+  "ถ้าหนูยังรู้สึกอยู่บ้าง ก็ช่วยเปิดใจให้พี่อีกครั้งนะ",
+  "ไม่ว่าเราจะได้เริ่มใหม่กันไหม พี่ก็จะยังรอหนูอยู่ตรงนี้เสมอ ",
+  "ขอบคุณที่เคยเป็นรอยยิ้มของพี่นะ หนูยังเป็นคนนั้นของพี่เสมอ ",
+  "ได้ไหม "
+];
+
+    const textEl = document.getElementById("text");
+
+    async function showLine(line) {
+      return new Promise((resolve) => {
+        textEl.className = ""; // reset animation
+        textEl.textContent = line;
+
+        void textEl.offsetWidth; // force reflow to restart animation
+
+        textEl.classList.add("fade-in");
+
+        setTimeout(() => {
+          textEl.classList.remove("fade-in");
+          textEl.classList.add("fade-out");
+          setTimeout(() => {
+            textEl.classList.remove("fade-out");
+            resolve();
+          }, 2000); // wait for fade-out
+        }, 5000); // show 5s before fade out
+      });
+    }
+
+    async function run() {
+      for (const line of lines) {
+        await showLine(line);
+      }
+    }
+
+    run();
+  </script>
+</body>
+</html>
